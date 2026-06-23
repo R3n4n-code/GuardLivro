@@ -1,20 +1,20 @@
 import { useEffect, useState } from 'react';
 import { LivroForm } from './componentes/livroForm/livroForm.js'
-import {Cria_Livro,} from './componentes/funcoes.js';
-import { Lista_Livro } from './componentes/funcoes.js';
+import {Cria_Livro,} from './componentes/LivroService.js';
+import { Lista_Livro } from './componentes/LivroService.js';
 import { ListarLivros } from './componentes/listaLivros/Listalivros.js';
-import type { Livros } from './types/type.js';
-import { Deletar } from './componentes/funcoes.js';
+import type { LivrosComid } from './types/type.js';
+import { Deletar } from './componentes/LivroService.ts';
 import './app.css'
 function App() {
 const [livro, setLivro] = useState({
     titulo: "",
     autor: "",
     status: "",
-    
+     
     
 });
-const [livros, setLivros] = useState<Livros[]>([]);
+const [livros, setLivros] = useState<LivrosComid[]>([]);
 
 useEffect(() => {
     async function carregar() {

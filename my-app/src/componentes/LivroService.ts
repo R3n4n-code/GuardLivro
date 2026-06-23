@@ -1,8 +1,8 @@
-import type { Livros } from "../types/type";
-const API = ("https://crudcrud.com/api/0bc4951762bc4569b221adad0bfd4793/livros")
+import type { Livros, LivrosComid } from "../types/type";
+const API = ("https://crudcrud.com/api/37af810ef8d34e2bb6a813a6d884596d/livros")
 
 
-export async function Cria_Livro(novolivro : Omit<Livros,'_id'>, livrosatuais: Livros[],setlivros: (valores: Livros[]) => void) { 
+export async function Cria_Livro(novolivro : Livros, livrosatuais: Livros[],setlivros: (valores: LivrosComid[]) => void) { 
 
 try {
     
@@ -20,13 +20,15 @@ try {
         body: JSON.stringify(novolivro)
 
     });
+    if (!resposta.ok) {
+    console.log("Não foi possivel criar um novo livro")
+    } 
     const livroCriado = await resposta.json();
 
     setlivros([...livrosatuais, livroCriado,]);
     
-if (resposta.ok) {
-    console.log(livroCriado)
-}    
+
+   
 
 } catch (error) {
     console.error(error);
@@ -37,17 +39,22 @@ if (resposta.ok) {
 }
 
 export async function Lista_Livro() {
-    
+try {   
 const dados = await fetch(API) 
+if (!dados.ok) {
+    console.log("erro ao dar GET")
 
+}
 const DadosGet = await dados.json();
 
 return DadosGet;
-
-} 
-
-export async function Deletar(_id:string, listaAtual:Livros[], setlista: (valor:Livros[])=> void) {
+} catch (error) {
+    console.error(error);
     
+} 
+}
+export async function Deletar(_id:string, listaAtual:LivrosComid[], setlista: (valor:LivrosComid[])=> void) {
+try {    
 const dados = await fetch(`${API}/${_id}`,{
     method: "DELETE"});
 if (!dados.ok) {
@@ -56,6 +63,7 @@ if (!dados.ok) {
 const listaFiltrada = listaAtual.filter(item => item._id !== _id);
 
 setlista(listaFiltrada)
-
+}catch (error) {
+    console.error(error);
 }
-
+}

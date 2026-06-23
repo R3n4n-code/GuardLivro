@@ -1,12 +1,12 @@
-import type { Livros } from "../../types/type";
+import type { Livros, LivrosComid } from "../../types/type";
 import styles from './Listalivros.module.css'
 
 type Props = {
-  livros: Livros[];
-  deletar: (id: any) => void;
+  livros: LivrosComid[];
+  deletar: (id: string) => void
 };
 
-export function ListarLivros({ livros, deletar }: Props) {
+export function ListarLivros({ livros,deletar}: Props ) {
   return (
     <div className={styles.grid}>
       {livros.map((livro) => (
